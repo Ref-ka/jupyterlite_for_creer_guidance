@@ -117,4 +117,7 @@ sns.relplot(sleep_data, kind='line', x='Stress Level', y='Sleep Duration', hue='
     Ну и самый простой график напоследок:
 
 sns.pairplot(sleep_data, hue='Gender')
+
+
+Конец!
 	
