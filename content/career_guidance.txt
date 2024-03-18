@@ -1,0 +1,120 @@
+Шаг №1
+
+		В Python существует такое понятие как библиотека - это модуль с кодом, 
+	который можно добавить в свою программу. 
+	
+	Давайте импортируем несколько библиотек, нужных для наших задач.
+	Напишите данный блок кода:
+	
+import pandas as pd
+import seaborn as sns
+
+Шаг №2
+
+	Теперь пора загрузить данные, с которыми мы будем работать:
+	
+data = pd.read_csv('@ПутьДоФайла@')
+data = data.loc[data['Salary'] <= 600000]
+print(data)
+
+Шаг №3
+
+	Сейчас попробуем нарисовать наш первый график:
+	
+sns.displot(data, x='Salary')
+
+Шаг №4
+
+	А теперь посмотрим на немного другие зависимости:
+	
+sns.displot(data, y='Employment')
+
+Шаг №5
+
+	Ну а сейчас попробуем вывести похожий график, но с другими значениями оси X:
+	
+sns.catplot(data.fillna(0), y='Employment', x='Salary', kind='swarm')
+
+Шаг №6
+
+	Теперь вообще красота - попробуем вывести график, отображающий сразу три характеристики:
+	
+tmp = data.groupby(['Employment', 'Experience'])['Salary'].mean().reset_index()
+tmp = tmp.pivot(index='Employment', columns='Experience', values='Salary').fillna(0)
+sns.heatmap(tmp)
+
+Шаг №7
+
+    Давайте теперь создадим из наших данных данных четыре выборки по городам:
+
+data_moscow = data.loc[data['City'] == 'Москва']
+data_ekb = data.loc[data['City'] == 'Екатеринбург']
+data_spb = data.loc[data['City'] == 'Санкт-Петербург']
+data_ufa = data.loc[data['City'] == 'Уфа']
+city_data = pd.concat([data_ufa, data_ekb, data_spb, data_moscow])
+print(data_spb)
+
+Шаг №8
+
+    Посмотрим на новые данные:
+
+sns.displot(city_data, x='Salary', hue='City')
+
+Шаг №9
+
+    Предыдущий гафик оказался не очень понятным, давайте попробуем другой:
+
+sns.catplot(city_data, x='Salary', hue='City')
+
+Прекрасно! Мы разобрали и рассмотрели наш первый датасет, посвященный вакансиям.
+А теперь попробуем обработать новый датасет со статистикой сна.
+
+Шаг №1
+
+    Загрузим и выведем новые данные:
+
+sleep_data = pd.read_csv('Sleep_health_and_lifestyle_dataset.csv')
+print(sleep_data)
+
+Шаг №2
+
+    Ну и самый первый график о качестве сна:
+
+sns.displot(sleep_data, x='Quality of Sleep')
+
+Шаг №3
+
+    Последний график уже не так впечатляет? Тогда сделаем такие выборки:
+
+sleep_overweight = sleep_data.loc[sleep_data['BMI Category'] == 'Overweight']
+sleep_obese = sleep_data.loc[sleep_data['BMI Category'] == 'Obese']
+sleep_normal = sleep_data.loc[sleep_data['BMI Category'] == 'Normal']
+data_bmi = pd.concat([sleep_overweight, sleep_obese, sleep_normal])
+
+Шаг №4
+
+    Выборки готовы, теперь рисуем график:
+
+sns.displot(data_bmi, x='Quality of Sleep', hue='BMI Category')
+
+Шаг №5
+
+    Помните красивый фиолетово-оранжевый график по предыдущему датасету? Сделаем такой же:
+
+print(sleep_data.groupby(['BMI Category', 'Gender'])['Sleep Duration'].mean())
+sleep_tmp = sleep_data.groupby(['BMI Category', 'Gender'])['Sleep Duration'].mean().reset_index()
+sleep_tmp = sleep_tmp.pivot(index='BMI Category', columns='Gender', values='Sleep Duration').fillna(0)
+sns.heatmap(sleep_tmp)
+
+Шаг №6
+
+    Ещё один простой график:
+
+sns.relplot(sleep_data, kind='line', x='Stress Level', y='Sleep Duration', hue='Gender')
+
+Шаг №7
+
+    Ну и самый простой график напоследок:
+
+sns.pairplot(sleep_data, hue='Gender')
+	
