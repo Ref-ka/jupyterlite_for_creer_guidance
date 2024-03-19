@@ -5,7 +5,10 @@
 	
 	Давайте импортируем несколько библиотек, нужных для наших задач.
 	Напишите данный блок кода:
-	
+
+import piplite
+await piplite.install("seaborn")
+
 import pandas as pd
 import seaborn as sns
 
@@ -13,7 +16,7 @@ import seaborn as sns
 
 	Теперь пора загрузить данные, с которыми мы будем работать:
 	
-data = pd.read_csv('@ПутьДоФайла@')
+data = pd.read_csv('data.csv')
 data = data.loc[data['Salary'] <= 600000]
 print(data)
 
@@ -73,7 +76,7 @@ sns.catplot(city_data, x='Salary', hue='City')
 
     Загрузим и выведем новые данные:
 
-sleep_data = pd.read_csv('Sleep_health_and_lifestyle_dataset.csv')
+sleep_data = pd.read_csv('sleep.csv')
 print(sleep_data)
 
 Шаг №2
